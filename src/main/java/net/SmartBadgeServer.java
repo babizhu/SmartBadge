@@ -50,4 +50,8 @@ public class SmartBadgeServer{
         return future;
     }
 
+    public static void main( String[] args ){
+        new SmartBadgeServer().run();
+    }
+
 }
