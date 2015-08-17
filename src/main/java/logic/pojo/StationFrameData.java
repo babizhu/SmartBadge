@@ -1,5 +1,6 @@
 package logic.pojo;
 
+import com.bbz.tool.time.TimeUtil;
 import io.netty.buffer.ByteBuf;
 import logic.ClientException;
 import logic.ErrorCode;
@@ -10,20 +11,20 @@ import java.util.Arrays;
 
 /**
  * Created by liu_k on 2015/8/6.
- * 基站上传的一帧数据
+ * 基站(网络)上传的一帧数据
  *
  */
 
 @Data
 public class StationFrameData{
-    private int             id;
+    private String          ip;
     private LabelInfo[]     labelInfos;
     private long            time;
 
 
 
-    public StationFrameData( int id, ByteBuf data ){
-        this.id = id;
+    public StationFrameData( String ip, ByteBuf data ){
+        this.ip = ip;
         byte labelCount = data.readByte();
         if( labelCount <= 0 ){
             throw new ClientException( ErrorCode.INVALID_REQUEST, "收到的标签数量为负数：" + labelCount );
@@ -40,16 +41,16 @@ public class StationFrameData{
         }
 
         time = System.currentTimeMillis();
-        System.out.println( "===================================================================");
+
 
     }
 
     @Override
     public String toString(){
         return "StationFrameData{" +
-                "id=" + id +
+                "id=" + ip +
                 ", labelInfos=" + Arrays.toString( labelInfos ) +
-                ", time=" + new DateTime( time ) +
+                ", time=" + new DateTime( time ).toString( TimeUtil.DATA_FORMAT_STR ) +
                 '}';
     }
 

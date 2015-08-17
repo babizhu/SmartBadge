@@ -7,6 +7,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by liu_kun on 2015/8/6.
@@ -14,11 +16,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class SmartBadgeServer{
 
+    private static Logger logger = LoggerFactory.getLogger( SmartBadgeServer.class );
+
     public ChannelFuture run(){
 
 
         EventLoopGroup bossGroup = new NioEventLoopGroup( 1 );
-        EventLoopGroup workerGroup = new NioEventLoopGroup( 1 );
+        EventLoopGroup workerGroup = new NioEventLoopGroup( 5 );
         ChannelFuture future = null;
         try {
             ServerBootstrap b = new ServerBootstrap();
@@ -35,6 +39,8 @@ public class SmartBadgeServer{
             future = b.bind( ServerCfg.PORT ).sync(); // (7)
 
 
+
+            logger.debug( "服务器开始启动，端口：" + ServerCfg.PORT );
             // Wait until the server socket is closed.
             // In this example, this does not happen, but you can do that to gracefully
             // shut down your server.

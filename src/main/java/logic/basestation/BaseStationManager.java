@@ -2,11 +2,10 @@ package logic.basestation;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import logic.pojo.LabelInfo;
-import logic.pojo.StationFrameData;
 
+import java.net.SocketAddress;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 public enum  BaseStationManager{
     INSTANCE;
 
-    private Map<Integer,IBaseStation> stationMap = Maps.newHashMap();
+    private Map<String, IBaseStation> stationMap = Maps.newHashMap();
     private List<LabelInfo> labelInfos = Lists.newArrayList();
 
     public void recordLabelPosition( LabelInfo label ){
@@ -24,7 +23,7 @@ public enum  BaseStationManager{
         for( IBaseStation station : stationMap.values() ) {
             List<Byte> list = Lists.newArrayList();
             byte rssi = station.getRssiById( label.getId() );
-            if( rssi != 0 ){
+            if( rssi != 0 ) {
                 list.add( rssi );
             }
 
@@ -34,12 +33,17 @@ public enum  BaseStationManager{
 
     }
 
-    public void receive( ChannelHandlerContext ctx, ByteBuf data ){
 
-        StationFrameData frameData = new StationFrameData( 100, data );
-//        byte foot = data.readByte();
-        System.out.println( "来自" + ctx.channel().remoteAddress() + "收到的数据：");
-        System.out.println( frameData );
+    public void receiveBaseStationMsg( SocketAddress ip, LabelInfo[] labelInfos ){
+        System.out.println( "来自" + ip + "的数据：" );
+        System.out.println( Arrays.toString(labelInfos) );
+        System.out.println( "===================================================================");
+
+        IBaseStation station = stationMap.get( ip );
+        if( station != null ){
+            station.refresh( labelInfos );
+        }
+
 
     }
 }

@@ -43,7 +43,9 @@ public class DataTypeChangeHelperTest{
     @Test
     public void testInt2byte() throws Exception{
 
-        System.out.println(DataTypeChangeHelper.ip2Int( "192.168.0.1" ));
+        long l = DataTypeChangeHelper.ip2Long( "238.168.0.1" );
+        System.out.println(l);
+        System.out.println( DataTypeChangeHelper.long2Ip( l ));
     }
 
     @Test
