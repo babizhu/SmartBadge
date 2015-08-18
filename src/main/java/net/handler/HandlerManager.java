@@ -11,7 +11,7 @@ public enum HandlerManager{
     INSTANCE;
 
 
-    public IHandler getHandler( HandlerContain contain ){
+    public IHandler getHandler( ReceiveContain contain ){
         int handlerId = contain.getHandlerId();
         switch( handlerId ){
             case 5001:

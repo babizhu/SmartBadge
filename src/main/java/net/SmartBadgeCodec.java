@@ -2,9 +2,10 @@ package net;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageCodec;
+import io.netty.handler.codec.ByteToMessageDecoder;
 import logic.Const;
-import net.handler.HandlerContain;
+import net.handler.ReceiveContain;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -12,16 +13,11 @@ import java.util.List;
 /**
  * Created by liu_kun on 2015/8/7.
  */
-public class SmartBadgeCodec extends ByteToMessageCodec<HandlerContain>{
-    private static org.slf4j.Logger logger = LoggerFactory.getLogger( SmartBadgeCodec.class );
+public class SmartBadgeCodec extends ByteToMessageDecoder{
+    private static Logger logger = LoggerFactory.getLogger( SmartBadgeCodec.class );
     @Override
     public void channelActive( ChannelHandlerContext ctx ) throws Exception{
         logger.debug( ctx.channel().remoteAddress() + "接入了" );
-    }
-
-    @Override
-    protected void encode( ChannelHandlerContext ctx, HandlerContain commandBase, ByteBuf byteBuf ) throws Exception{
-
     }
 
     @Override
@@ -41,13 +37,21 @@ public class SmartBadgeCodec extends ByteToMessageCodec<HandlerContain>{
         int dataLen = in.readShort();
 
         logger.debug( ctx.channel().remoteAddress() + " 需要长度:" + dataLen + ",实际长度：" + in.readableBytes() );
+//        if( dataLen > 30 ){
+//            in.resetReaderIndex();
+//            logger.debug( ctx.channel().remoteAddress() + " " + ByteBufUtil.hexDump( in ) );
+//            //恢复游标，方便下面继续处理
+//            //in.readerIndex( 3 );
+//            in.readByte();
+//            in.readShort();
+//        }
 
         if( in.readableBytes() < dataLen ) {
             in.resetReaderIndex();
             return;
         }
 
-        out.add( new HandlerContain( head, dataLen, in ) );
+        out.add( new ReceiveContain( head, dataLen, in ) );
 
 //        out.add( HandlerManager.INSTANCE.getHandler( ctx, head, in ) );
     }

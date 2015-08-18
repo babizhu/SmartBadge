@@ -60,6 +60,12 @@
             <version>4.5</version>
         </dependency>
 
+        <dependency>
+                        <groupId>org.nutz</groupId>
+                        <artifactId>nutz</artifactId>
+                        <version>1.b.52</version>
+                    </dependency>
+
     </dependencies>
 
 </project>

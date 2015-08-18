@@ -3,7 +3,7 @@ package net;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
-import net.handler.HandlerContain;
+import net.handler.ReceiveContain;
 
 import java.util.List;
 
@@ -11,18 +11,19 @@ import java.util.List;
  * Created by liu_k on 2015/8/7.
  *
  */
-public class SmartBadgeCodec1 extends ByteToMessageCodec<HandlerContain>{
+public class SmartBadgeCodec1 extends ByteToMessageCodec<ReceiveContain>{
     @Override
     public void channelActive( ChannelHandlerContext ctx ) throws Exception{
         System.out.println( ctx.channel().remoteAddress() + "接入了");
     }
     @Override
-    protected void encode( ChannelHandlerContext ctx, HandlerContain commandBase, ByteBuf byteBuf ) throws Exception{
+    protected void encode( ChannelHandlerContext ctx, ReceiveContain commandBase, ByteBuf byteBuf ) throws Exception{
 
     }
 
     @Override
     protected void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out ) throws Exception{
+
 
         int len = in.readableBytes();
         byte[] arr = new byte[len];

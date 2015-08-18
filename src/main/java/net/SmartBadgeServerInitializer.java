@@ -15,6 +15,7 @@ public class SmartBadgeServerInitializer extends ChannelInitializer<SocketChanne
                 ChannelPipeline pipeline = ch.pipeline();
 
 //                pipeline.addLast( "codec", new SmartBadgeCodec1() );
+                pipeline.addLast( "rawNetData", new PrintRawNetData() );
                 pipeline.addLast( "codec", new SmartBadgeCodec() );
                 pipeline.addLast( "handler", new SmartBadgeDispatcher() );
 

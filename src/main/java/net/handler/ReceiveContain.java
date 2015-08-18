@@ -3,8 +3,11 @@ package net.handler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import logic.ClientException;
+import logic.Const;
 import logic.ErrorCode;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by liu_k on 2015/8/7.
@@ -15,7 +18,8 @@ import lombok.Data;
  * 其中data字段是需要进一步关注d内容
  */
 @Data
-public class HandlerContain{
+public class ReceiveContain{
+        private static Logger logger = LoggerFactory.getLogger( ReceiveContain.class );
     private final byte head;
     private final int handlerId;
     private final ByteBuf data;
@@ -23,7 +27,7 @@ public class HandlerContain{
     private final byte foot;
 
 
-    public HandlerContain( byte head, int dataLen, ByteBuf buf ){
+    public ReceiveContain( byte head, int dataLen, ByteBuf buf ){
         this.head = head;
 
         //System.out.println( ByteBufUtil.hexDump( buf ));
@@ -34,6 +38,9 @@ public class HandlerContain{
 
 
         foot = buf.readByte();//-1
+        if( foot != Const.NET_FOOT ){
+            logger.error( "错误的包尾" + foot );
+        }
 
         buf.retain();
         if( !isTokenValid() ) {
@@ -43,7 +50,7 @@ public class HandlerContain{
 
     @Override
     public String toString(){
-        return "HandlerContain{" +
+        return "ReceiveContain{" +
                 "head=" + head +
                 ", handlerId=" + handlerId +
                 ", data=" + ByteBufUtil.hexDump( data ) +

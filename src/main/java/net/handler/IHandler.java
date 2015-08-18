@@ -1,5 +1,6 @@
 package net.handler;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -7,6 +8,6 @@ import io.netty.channel.ChannelHandlerContext;
  * time         2014-6-6 19:05
  */
 public interface IHandler{
-    void run( ChannelHandlerContext ctx );
+    ByteBuf run( ChannelHandlerContext ctx );
 
 }
