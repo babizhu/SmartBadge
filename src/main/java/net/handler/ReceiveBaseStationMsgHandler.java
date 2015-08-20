@@ -1,5 +1,7 @@
 package net.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -56,6 +58,10 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
         }
         String responseBody = PostRssiToWebServer.INSTANCE.sendToWebServer( sb.toString() );
 
+        JSONObject jsonObject  = (JSONObject) JSON.parse( responseBody );
+        String  command = jsonObject.getString( "Command" );
+        //System.out.println( command);
+        logger.debug( responseBody );
         //buildResponse( ctx );
         return buildResponse(  );
     }

@@ -29,7 +29,8 @@ public class SmartBadgeDispatcher extends SimpleChannelInboundHandler<ReceiveCon
 
             ByteBuf responseBuf = handler.run( ctx );
             if( responseBuf != null ){
-                ctx.writeAndFlush( buildFullResponse( ctx, responseBuf ) );
+                //ctx.writeAndFlush( buildFullResponse( ctx, responseBuf ) );
+                ctx.writeAndFlush( responseBuf );
             }
         }
         catch( Exception e ){

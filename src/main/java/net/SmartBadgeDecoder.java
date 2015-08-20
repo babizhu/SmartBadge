@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Created by liu_kun on 2015/8/7.
  */
-public class SmartBadgeCodec extends ByteToMessageDecoder{
-    private static Logger logger = LoggerFactory.getLogger( SmartBadgeCodec.class );
+public class SmartBadgeDecoder extends ByteToMessageDecoder{
+    private static Logger logger = LoggerFactory.getLogger( SmartBadgeDecoder.class );
     @Override
     public void channelActive( ChannelHandlerContext ctx ) throws Exception{
         logger.debug( ctx.channel().remoteAddress() + "接入了" );

@@ -1,5 +1,7 @@
 package net.handler;
 
+import logic.CommandConst;
+
 /**
  * user         LIUKUN
  * time         2014-5-29 11:37
@@ -14,7 +16,7 @@ public enum HandlerManager{
     public IHandler getHandler( ReceiveContain contain ){
         int handlerId = contain.getHandlerId();
         switch( handlerId ){
-            case 5001:
+            case CommandConst.RECEIVE_BASESTATION_MSG:
                 return new ReceiveBaseStationMsgHandler( contain.getData() );
         }
         return null;

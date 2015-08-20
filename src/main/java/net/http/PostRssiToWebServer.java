@@ -77,7 +77,7 @@ public enum PostRssiToWebServer{
 
         } catch( Exception e ) {
             logger.error( "发送内容 " + content + "到" + ServerCfg.WEB_IP + "的时候出现了异常 " + e.toString() );
-            throw e;
+            e.printStackTrace();
         }
 
         return responseBody;
