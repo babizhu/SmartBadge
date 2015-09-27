@@ -16,7 +16,7 @@ public class DataTypeChangeHelperTest{
 
     @Test
     public void testByteToHex() throws Exception{
-        byte b = -20;
+        byte b = 10;
         System.out.println( DataTypeChangeHelper.byteToHex( b ));
     }
 
