@@ -60,7 +60,7 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
                     .append( labelInfo.getPower() ).append( " " );
         }
         String responseBody = PostRssiToWebServer.INSTANCE.sendToWebServer( sb.toString() );
-        logger.debug( "从web服务器收到的关于"+ getRemoteIp( ctx ) +"收到的数据为：" + responseBody );
+        logger.debug( "从web服务器收到的关于基站"+ getRemoteIp( ctx ) +"的反馈数据为：" + responseBody );
 
         JSONObject jsonObject  = (JSONObject) JSON.parse( responseBody );
         if( jsonObject != null ){
