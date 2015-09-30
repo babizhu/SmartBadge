@@ -12,15 +12,16 @@ import java.util.List;
 
 /**
  * Created by liu_kun on 2015/8/7.
+ * 协议解码器
  */
 public class SmartBadgeDecoder extends ByteToMessageDecoder{
     private static Logger logger = LoggerFactory.getLogger( SmartBadgeDecoder.class );
+
     @Override
     public void channelActive( ChannelHandlerContext ctx ) throws Exception{
         logger.debug( ctx.channel().remoteAddress() + "接入了" );
     }
 
-    @Override
     protected void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out ) throws Exception{
 
 //        System.out.println( ByteBufUtil.hexDump( in ));
@@ -30,7 +31,7 @@ public class SmartBadgeDecoder extends ByteToMessageDecoder{
         }
         in.markReaderIndex();
         byte head = in.readByte(); //-56
-        if( head != Const.NET_HEAD ){
+        if( head != Const.NET_HEAD ) {
             logger.debug( "收到了错误的head信息：" + head );
             return;
         }

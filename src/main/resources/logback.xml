@@ -33,10 +33,10 @@
         </encoder>
     </appender>
 
-    <logger name="AWARD_LOG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="AWARD"/>
-    </logger>
+    <!--<logger name="AWARD_LOG" additivity="false">-->
+        <!--<appender-ref ref="STDOUT"/>-->
+        <!--<appender-ref ref="AWARD"/>-->
+    <!--</logger>-->
 
 
     <root level="debug">
