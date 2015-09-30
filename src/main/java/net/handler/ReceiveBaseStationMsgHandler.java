@@ -6,7 +6,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import logic.ClientException;
-import logic.CommandConst;
 import logic.ErrorCode;
 import logic.pojo.LabelInfo;
 import net.http.PostRssiToWebServer;
@@ -16,10 +15,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by   liu_k
  * Time         2015/8/12 10:58
+ *
+ * 处理基站回送的应答信息，
+ * 例如：发送给基站开门指令之后，基站回送一个开门指令的应答信息，则在此类中进行处理
+ *
  */
 public class ReceiveBaseStationMsgHandler implements IHandler{ //extends AbstractHandler{
-
-    private static Logger logger = LoggerFactory.getLogger( ReceiveBaseStationMsgHandler.class );
+    private static Logger logger = LoggerFactory.getLogger( ReceiveBaseStationCmdHandler.class );
     private LabelInfo[] labelInfos;
 
     public ReceiveBaseStationMsgHandler( ByteBuf data ){
@@ -48,11 +50,12 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
     @Override
     public ByteBuf run( ChannelHandlerContext ctx ){
 
+
         // BaseStationManager.INSTANCE.receiveBaseStationMsg( ctx.channel().remoteAddress(), labelInfos );
         StringBuilder sb = new StringBuilder();
         for( LabelInfo labelInfo : labelInfos ) {
             sb.append( getRemoteIp( ctx ) ).append( "," )
-                    .append( labelInfo.getId() ).append( "," )
+                    .append( Long.toHexString( labelInfo.getId() ) ).append( "," )
                     .append( labelInfo.getRssi() ).append( "," )
                     .append( labelInfo.getPower() ).append( " " );
         }
@@ -60,10 +63,13 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
 
         JSONObject jsonObject  = (JSONObject) JSON.parse( responseBody );
         String  command = jsonObject.getString( "Command" );
+        if( command != null ){
+            return buildResponse( command );
+        }
         //System.out.println( command);
         logger.debug( responseBody );
         //buildResponse( ctx );
-        return buildResponse(  );
+        return null;
     }
 
 
@@ -73,10 +79,10 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
      * @return
      *  包括包id以及包内容的一个bytebuf
      */
-    private ByteBuf buildResponse( ){
+    private ByteBuf buildResponse( String command ){
         ByteBuf buf = Unpooled.buffer();
 
-        buf.writeShort( CommandConst.OPEN_DOOR );
+        buf.writeShort( Short.parseShort( command ) );
 
 //        logger.debug( ByteBufUtil.hexDump( buf ) );
         return buf;
@@ -87,5 +93,6 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
         ip = ip.substring( 1, ip.indexOf( ":" ) );
         return ip;
     }
+
 
 }

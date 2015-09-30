@@ -16,8 +16,11 @@ public enum HandlerManager{
     public IHandler getHandler( ReceiveContain contain ){
         int handlerId = contain.getHandlerId();
         switch( handlerId ){
-            case CommandConst.RECEIVE_BASESTATION_MSG:
+            case CommandConst.RECEIVE_MSG_FROM_BASE_STATION:
                 return new ReceiveBaseStationMsgHandler( contain.getData() );
+            case CommandConst.RECEIVE_OTHER_CMD_FROM_BASE_STATION:
+            case CommandConst.RECEIVE_OPEN_DOOR_FROM_BASE_STATION:
+                return new ReceiveBaseStationCmdHandler( contain.getData() );
         }
         return null;
     }

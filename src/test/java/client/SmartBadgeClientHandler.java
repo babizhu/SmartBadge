@@ -73,7 +73,7 @@ public class SmartBadgeClientHandler extends ChannelHandlerAdapter{
     private void buildMsg(){
         msg.writeByte( Const.NET_HEAD );//head
         msg.writeShort( 16 );//长度
-        msg.writeShort( CommandConst.RECEIVE_BASESTATION_MSG );
+        msg.writeShort( CommandConst.RECEIVE_MSG_FROM_BASE_STATION );
         msg.writeByte( 1 );//循环数量
 //        msg.writeLong( 0X28F2543E315C0000 );
 //        msg.writeLong( 2950513331973914624 );
@@ -98,7 +98,7 @@ public class SmartBadgeClientHandler extends ChannelHandlerAdapter{
         logger.debug( String.valueOf( msg.writerIndex() ) );
         msg.writeByte( Const.NET_HEAD );//head
         msg.writeShort( 16 );//长度
-        msg.writeShort( CommandConst.RECEIVE_BASESTATION_MSG );
+        msg.writeShort( CommandConst.RECEIVE_MSG_FROM_BASE_STATION );
         msg.writeByte( 1 );//循环数量
 //        msg.writeLong( 0X28F2543E315C0000 );
 //        msg.writeLong( 2950513331973914624 );
