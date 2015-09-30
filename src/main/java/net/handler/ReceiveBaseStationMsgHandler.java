@@ -60,14 +60,18 @@ public class ReceiveBaseStationMsgHandler implements IHandler{ //extends Abstrac
                     .append( labelInfo.getPower() ).append( " " );
         }
         String responseBody = PostRssiToWebServer.INSTANCE.sendToWebServer( sb.toString() );
+        logger.debug( "从web服务器收到的关于"+ getRemoteIp( ctx ) +"收到的数据为：" + responseBody );
 
         JSONObject jsonObject  = (JSONObject) JSON.parse( responseBody );
-        String  command = jsonObject.getString( "Command" );
-        if( command != null ){
-            return buildResponse( command );
+        if( jsonObject != null ){
+            String  command = jsonObject.getString( "Command" );
+            if( command != null ){
+                return buildResponse( command );
+            }
         }
-        //System.out.println( command);
-        logger.debug( responseBody );
+
+
+
         //buildResponse( ctx );
         return null;
     }
