@@ -25,7 +25,7 @@ public class SmartBadgeDecoder extends ByteToMessageDecoder{
     protected void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out ) throws Exception{
 
 //        System.out.println( ByteBufUtil.hexDump( in ));
-        if( in.readableBytes() < 1 + 2 ) {  //包头+长度
+        if( in.readableBytes() < 1 + 2 ) {  //1字节包头+2字节长度
 
             return;
         }
