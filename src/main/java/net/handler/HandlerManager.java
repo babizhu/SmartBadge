@@ -21,6 +21,8 @@ public enum HandlerManager{
             case CommandConst.RECEIVE_OTHER_CMD_FROM_BASE_STATION:
             case CommandConst.RECEIVE_OPEN_DOOR_FROM_BASE_STATION:
                 return new ReceiveBaseStationCmdHandler( contain.getData() );
+            case CommandConst.CONSUME:
+                return new ConsumeHandler( contain.getData() );
         }
         return null;
     }

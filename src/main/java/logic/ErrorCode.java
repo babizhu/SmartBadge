@@ -258,12 +258,14 @@ public enum ErrorCode{
         }
     }
 
+
     /**
      * 判断当前枚举是否成功
      *
      * @return true:成功 false:失败
      */
     public boolean isSuccess(){
+
         return number == 0;
     }
 
@@ -273,6 +275,7 @@ public enum ErrorCode{
     ErrorCode( int number ){
         this.number = number;
         this.msg = "aaa";
+        
     }
 
     ErrorCode( int number, String msg ){
@@ -289,8 +292,8 @@ public enum ErrorCode{
     }
 
 
-    public static void main(String[] args){
-        System.out.println(ErrorCode.SUCCESS.toNum());
+    public static void main( String[] args ){
+        System.out.println( ErrorCode.SUCCESS.toNum() );
     }
 
 }

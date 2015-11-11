@@ -4,7 +4,7 @@ package logic;
  * Created by   liu_k
  * Time         2015/8/14 15:23
  */
-public class Const{
+public class NetConst{
     public static final byte NET_HEAD = -56;
     //数据下行的head
     public static final byte NET_HEAD1 = (byte) 0xD2;

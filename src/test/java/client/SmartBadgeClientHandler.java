@@ -6,7 +6,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import logic.CommandConst;
-import logic.Const;
+import logic.NetConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +71,7 @@ public class SmartBadgeClientHandler extends ChannelHandlerAdapter{
     }
 
     private void buildMsg(){
-        msg.writeByte( Const.NET_HEAD );//head
+        msg.writeByte( NetConst.NET_HEAD );//head
         msg.writeShort( 16 );//长度
         msg.writeShort( CommandConst.RECEIVE_MSG_FROM_BASE_STATION );
         msg.writeByte( 1 );//循环数量
@@ -96,7 +96,7 @@ public class SmartBadgeClientHandler extends ChannelHandlerAdapter{
         msg.retain();
         //msg.markWriterIndex();
         logger.debug( String.valueOf( msg.writerIndex() ) );
-        msg.writeByte( Const.NET_HEAD );//head
+        msg.writeByte( NetConst.NET_HEAD );//head
         msg.writeShort( 16 );//长度
         msg.writeShort( CommandConst.RECEIVE_MSG_FROM_BASE_STATION );
         msg.writeByte( 1 );//循环数量

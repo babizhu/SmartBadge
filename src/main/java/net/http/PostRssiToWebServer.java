@@ -73,7 +73,7 @@ public enum PostRssiToWebServer{
 
             responseBody = Http.post( ServerCfg.WEB_IP,
                     parms,
-                    5 * 1000 ); // 可以同时设置超时时间
+                    500 ); // 可以同时设置超时时间
 
         } catch( Exception e ) {
             logger.error( "发送内容 " + content + "到" + ServerCfg.WEB_IP + "的时候出现了异常 " + e.toString() );

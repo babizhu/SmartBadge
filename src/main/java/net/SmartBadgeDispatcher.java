@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import logic.ClientException;
-import logic.Const;
+import logic.NetConst;
 import logic.ErrorCode;
 import net.handler.HandlerManager;
 import net.handler.IHandler;
@@ -29,7 +29,6 @@ public class SmartBadgeDispatcher extends SimpleChannelInboundHandler<ReceiveCon
 
             ByteBuf responseBuf = handler.run( ctx );
             if( responseBuf != null ){
-                //ctx.writeAndFlush( buildFullResponse( ctx, responseBuf ) );
                 ctx.writeAndFlush( responseBuf );
             }
         }
@@ -54,14 +53,17 @@ public class SmartBadgeDispatcher extends SimpleChannelInboundHandler<ReceiveCon
     private ByteBuf buildFullResponse( ChannelHandlerContext ctx, ByteBuf responseBuf ){
 
         ByteBuf fullResponse = ctx.alloc().buffer();
-        fullResponse.writeByte( Const.NET_HEAD1 );//头
+        fullResponse.writeByte( NetConst.NET_HEAD1 );//头
         fullResponse.writeShort( responseBuf.readableBytes() - 2 + 3 );//2 for 包号 | 3 for token ，foot
         fullResponse.writeBytes( responseBuf );
         //fullResponse.writeShort( CommandConst.OPEN_DOOR );
-        fullResponse.writeShort( Const.NET_TOKEN );
-        fullResponse.writeByte( Const.NET_FOOT );
+        fullResponse.writeShort( NetConst.NET_TOKEN );
+        fullResponse.writeByte( NetConst.NET_FOOT );
         return fullResponse;
     }
 
-
+    @Override
+    public void exceptionCaught( ChannelHandlerContext ctx, Throwable cause ) throws Exception{
+        logger.error( cause.toString() );
+    }
 }

@@ -3,7 +3,7 @@ package net;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import logic.Const;
+import logic.NetConst;
 import net.handler.ReceiveContain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class SmartBadgeDecoder extends ByteToMessageDecoder{
         }
         in.markReaderIndex();
         byte head = in.readByte(); //-56
-        if( head != Const.NET_HEAD ) {
+        if( head != NetConst.NET_HEAD ) {
             logger.debug( "收到了错误的head信息：" + head );
             return;
         }

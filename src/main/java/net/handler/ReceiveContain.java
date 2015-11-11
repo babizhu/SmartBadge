@@ -3,7 +3,7 @@ package net.handler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import logic.ClientException;
-import logic.Const;
+import logic.NetConst;
 import logic.ErrorCode;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class ReceiveContain{
 
 
         foot = buf.readByte();//-1
-        if( foot != Const.NET_FOOT ){
+        if( foot != NetConst.NET_FOOT ){
             logger.error( "错误的包尾" + foot );
         }
 
